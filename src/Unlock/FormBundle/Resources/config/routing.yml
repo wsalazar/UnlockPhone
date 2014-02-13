@@ -1,0 +1,15 @@
+UnlockFormBundle_homepage:
+    pattern:  /
+    defaults: { _controller: UnlockFormBundle:Page:new }
+    requirements:
+        _method:  GET
+
+    #pattern: /success
+    #defaults: { _controller: UnlockFormBundle:Page:submitted }
+    #requirements:
+    #    _method:  GET
+
+    #pattern: /failure
+    #defaults: { _controller: UnlockFormBundle:Page:fail }
+    #requirements:
+    #    _method:  GET
