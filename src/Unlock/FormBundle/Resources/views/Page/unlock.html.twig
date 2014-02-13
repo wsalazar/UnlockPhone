@@ -1,0 +1,83 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+	<form action="{{ path('UnlockFormBundle_unlock') }}" method="post" {{ form_enctype(form) }} class="unlock">
+        {{ form_errors(form) }}
+
+        {{ form_row(form.imie) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.creditCardNum) }}
+        {{ form_row(form.nameOnCreditCard) }}
+        {{ form_row(form.monthExpired) }}
+        {{ form_row(form.yearExpired) }}
+        {{ form_row(form.cvv) }}
+
+
+        {{ form_rest(form) }}
+        <br />
+        <input type="submit" value="Send me Unlock Code" />
+    </form>
+	<!--
+	<section id="unlock-form">
+		<fieldset>
+			<legend>Unlock Counter</legend>
+			<form>
+				<div id="txtField">
+					<label for="imie">IMIE</label>
+						<input type="text" name="imie" id="imie"><br />
+				</div>
+				<div id="txtField">
+				<label for="fname">First Name: </label>
+					<input type="text" name="fname" id="fname"><br />
+				</div>
+				<div id="txtField">
+				<label for="lname">Last Name: </label>
+					<input type="text" name="lname" id="lname"><br />
+				</div>
+				<div id="txtField">
+				<label for="email">Email: </label>
+					<input type="text" name="email" id="email"><br />
+				</div>
+				<div id="txtField">
+				<label for="cc">Credit Card Num: </label>
+					<input type="text" name="cc" id="cc"><br />
+				</div>
+				<div id="txtField">
+				<label for="cc-name">Name on Credit Card: </label>
+					<input type="text" name="cc-name" id="cc-name"><br />
+				</div>
+				<div id="txtField">
+				<label for="cc-exp">Credit Card Expiration: </label>
+					<select name="cc-exp-mth">
+						<option value="1">January</option>
+						<option value="2">February</option>
+						<option value="3">March</option>
+						<option value="4">April</option>
+						<option value="5">May</option>
+						<option value="6">June</option>
+						<option value="7">July</option>
+						<option value="8">August</option>
+						<option value="9">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+					<select name="cc-exp-yr">
+						<option value="1">2014</option>
+						<option value="2">2015</option>
+						<option value="3">2016</option>
+						<option value="4">2017</option>
+						<option value="5">2018</option>
+						<option value="6">2019</option>
+						<option value="7">2020</option>
+						<option value="8">2021</option>
+					</select><br />
+				<label for="cc-cvv">CVV: </label>
+					<input type="text" name="cc-cvv" id="cc-cvv"><br />
+			</form>
+		</fieldset>
+	</section>
+-->
+{% endblock %}
