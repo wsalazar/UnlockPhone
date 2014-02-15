@@ -61,11 +61,11 @@ class Unlock
 		return $this->nameOnCreditCard;
 	}
 
-	public function setCreditCardNumber($creditCardNum){
+	public function setCreditCardNum($creditCardNum){
 		$this->creditCardNum = $creditCardNum;
 	}
 
-	public function getCreditCardNumber(){
+	public function getCreditCardNum(){
 		return $this->creditCardNum;
 	}
 

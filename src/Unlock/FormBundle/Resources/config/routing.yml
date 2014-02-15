@@ -1,15 +1,12 @@
-UnlockFormBundle_homepage:
-    pattern:  /
-    defaults: { _controller: UnlockFormBundle:Page:new }
+UnlockFormBundle_unlock:
+    pattern:  /unlock
+    defaults: { _controller: UnlockFormBundle:Page:unlock }
     requirements:
-        _method:  GET
+        _method:  GET|POST
 
-    #pattern: /success
-    #defaults: { _controller: UnlockFormBundle:Page:submitted }
-    #requirements:
-    #    _method:  GET
+UnlockFormBundle_paypal_token:
+    pattern:  /token
+    defaults: { _controller: UnlockFormBundle:PayPal:token }
+    requirements:
+        _method:  GET|POST
 
-    #pattern: /failure
-    #defaults: { _controller: UnlockFormBundle:Page:fail }
-    #requirements:
-    #    _method:  GET

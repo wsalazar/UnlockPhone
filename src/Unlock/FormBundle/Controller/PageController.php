@@ -4,39 +4,42 @@ namespace Unlock\FormBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Unlock\FormBundle\Entity\Unlock;
-use Symfony\Component\HttpFoundation\Request;
+use Unlock\FormBundle\Form\UnlockType;
 //use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
-	public function newAction(Request $request){
+
+	const PAYPAL_SANDBOX_URL = 'https://api.sandbox.paypal.com/v1/oauth2/token';
+	const TEST_ACCOUNT = 'will.a.salazar-facilitator@gmail.com';
+	const CLIENT_ID = 'AVKZiRAC2C-fS-yDLWkrzWL3N-0M0pxV8_31Ag0jVEVSckexk2wO0C5B3bJ1';
+	const SECRET = 'EIuSqhBjIdiADvhFMA1KPE6Qq6MOFBvkVH5ACI1s5OBECyUM2-Wg10EKFTg6';
+
+	public function unlockAction(){
 		$unlock = new Unlock();
-		$form = $this->createFormBuilder($unlock)
-				->add('imie','text')
-				->add('firstName','text')
-				->add('lastName','text')
-				->add('email','text')
-				->add('creditCardNumber','text')
-				->add('nameOnCreditCard','text')
-				->add('monthExpired','number')
-				->add('yearExpired','number')
-				->add('cvv','number')
-				->add('Send Unlock Code','submit')
-				->getForm();
-		//echo get_class($form);
-		$form->handleRequest($request);
-		if($form->isValid()){
-			echo 'haha';
-			return $this->redirect($this->generateUrl('success'));
+		$form = $this->createForm(new UnlockType(), $unlock);
+		$request = $this->getRequest();
+		if($request->getMethod() == 'POST'){
+			$form->bind($request);
+
+			if($form->isValid()){
+				$curl = 'curl -v ' . PageController::PAYPAL_SANDBOX_URL . ' -H "Accept: application/json" -H "Accept-Language: en_US" -u "'.
+					PageController::CLIENT_ID . ':'. PageController::SECRET . '" -d "grant_type=client_credentials"';
+				//echo $curl;
+
+				$token = shell_exec($curl);
+				$token = json_decode($token);
+				$className = get_class($token);
+				if($token instanceof $className){
+					//echo gettype($token);
+					//var_dump($token);
+					echo '<br /><br /> Access Token: '.$token->access_token;
+				}
+				//$resource = curl_init();
+				//$this->redirect($this->generateUrl('UnlockFormBundle_paypal_payment'));
+
+			}
 		}
-		return $this->redirect($this->generateUrl('failure'));
-	}
-
-	public function submittedAction(){
-		echo 'yes';
-	}
-
-	public function failAction(){
-		echo 'no';
+		return $this->render('UnlockFormBundle:Page:unlock.html.twig',array('form' => $form->createView()));
 	}
 }
