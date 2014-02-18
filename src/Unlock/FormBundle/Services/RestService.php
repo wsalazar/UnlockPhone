@@ -4,6 +4,7 @@ namespace Unlock\FormBundle\Services;
 
 class RestService
 {
+
 	const PAYPAL_SANDBOX_URL = 'https://api.sandbox.paypal.com/v1/';
 	const TEST_ACCOUNT = 'will.a.salazar-facilitator@gmail.com';
 	const CLIENT_ID = 'AVKZiRAC2C-fS-yDLWkrzWL3N-0M0pxV8_31Ag0jVEVSckexk2wO0C5B3bJ1';
@@ -31,10 +32,9 @@ class RestService
 		//return shell_exec($curl);
 	}
 
-	public function setToken($tokenHandler){
-		$json = json_decode($tokenHandler);
-		//echo 'json response get type : ' . $jsonData->access_token;
-		$this->token = $json->access_token;
+	public function setToken($tokenHanlder){
+		$accessToken = json_decode($tokenHanlder);
+		$this->token = $accessToken->access_token;
 	}
 
 	public function getToken(){
