@@ -32,8 +32,8 @@ class RestService
 		//return shell_exec($curl);
 	}
 
-	public function setToken($tokenHanlder){
-		$accessToken = json_decode($tokenHanlder);
+	public function setToken($tokenHandler){
+		$accessToken = json_decode($tokenHandler);
 		$this->token = $accessToken->access_token;
 	}
 
