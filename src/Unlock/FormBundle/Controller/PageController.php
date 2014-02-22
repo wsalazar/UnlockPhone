@@ -20,21 +20,26 @@ class PageController extends Controller
 
 			if($form->isValid()){
 				$service = new RestService();
-				if(!($tokenHandler = $service->hasAccess())) {
+				if(!($tokenHandler = $service->getAccessToken())) {
 
 				}
-				//echo gettype($tokenHandler) . '<br />';
-				$service->setToken($tokenHandler);
-				//echo '<br /><br /> Access Token: '. $service->getToken();
-				//$service->verifyPayments();
-				$result = $service->verifyPayments();
-				//var_dump($result);
-				//echo 'hi';
-				//$resource = curl_init();
-				//$this->redirect($this->generateUrl('UnlockFormBundle_paypal_payment'));
+				$service->setAccessToken($tokenHandler);
+				$restStatus = $service->getUserPermission();
+				echo 'This is print r<br />';
+				print_r($restStatus);
+				$service->RestErrorHandler($restStatus);
+				//echo $result;
+				//return $this->redirect($this->generateUrl('UnlockFormBundle_thankyou'));
 
+				//echo '<br /><br /> Access Token: '. $service->getAccessToken();
+				//$service->verifyPayments();
+				//$result = $service->verifyPayments();
 			}
 		}
 		return $this->render('UnlockFormBundle:Page:unlock.html.twig',array('form' => $form->createView()));
+	}
+
+	public function thankyouAction(){
+		return $this->render('UnlockFormBundle:Page:thankyou.html.twig');
 	}
 }

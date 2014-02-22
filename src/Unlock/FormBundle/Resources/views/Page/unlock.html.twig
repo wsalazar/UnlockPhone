@@ -19,65 +19,18 @@
         <br />
         <input type="submit" value="Email my Unlock Code" />
     </form>
-	<!--
-	<section id="unlock-form">
-		<fieldset>
-			<legend>Unlock Counter</legend>
-			<form>
-				<div id="txtField">
-					<label for="imie">IMIE</label>
-						<input type="text" name="imie" id="imie"><br />
-				</div>
-				<div id="txtField">
-				<label for="fname">First Name: </label>
-					<input type="text" name="fname" id="fname"><br />
-				</div>
-				<div id="txtField">
-				<label for="lname">Last Name: </label>
-					<input type="text" name="lname" id="lname"><br />
-				</div>
-				<div id="txtField">
-				<label for="email">Email: </label>
-					<input type="text" name="email" id="email"><br />
-				</div>
-				<div id="txtField">
-				<label for="cc">Credit Card Num: </label>
-					<input type="text" name="cc" id="cc"><br />
-				</div>
-				<div id="txtField">
-				<label for="cc-name">Name on Credit Card: </label>
-					<input type="text" name="cc-name" id="cc-name"><br />
-				</div>
-				<div id="txtField">
-				<label for="cc-exp">Credit Card Expiration: </label>
-					<select name="cc-exp-mth">
-						<option value="1">January</option>
-						<option value="2">February</option>
-						<option value="3">March</option>
-						<option value="4">April</option>
-						<option value="5">May</option>
-						<option value="6">June</option>
-						<option value="7">July</option>
-						<option value="8">August</option>
-						<option value="9">September</option>
-						<option value="10">October</option>
-						<option value="11">November</option>
-						<option value="12">December</option>
-					</select>
-					<select name="cc-exp-yr">
-						<option value="1">2014</option>
-						<option value="2">2015</option>
-						<option value="3">2016</option>
-						<option value="4">2017</option>
-						<option value="5">2018</option>
-						<option value="6">2019</option>
-						<option value="7">2020</option>
-						<option value="8">2021</option>
-					</select><br />
-				<label for="cc-cvv">CVV: </label>
-					<input type="text" name="cc-cvv" id="cc-cvv"><br />
-			</form>
-		</fieldset>
-	</section>
--->
+{# endblock #}
+
+{# block javascripts #}
+<!--<script type="text/javascript" src="{{ asset('js/paypal-button.js') }}"></script>
+<script data-env="sandbox" 
+    data-callback="http://unlock.lcl/app_dev.php/unlock" 
+    data-tax="3.50" 
+    data-shipping=".75" 
+    data-currency="USA" 
+    data-amount="5" 
+    data-quantity="1" 
+    data-name="Unlock" 
+    data-button="emailmyunlockcode" src="https://www.paypalobjects.com/js/external/paypal-button.min.js?merchant=will.a.salazar@gmail.com"
+></script>-->
 {% endblock %}

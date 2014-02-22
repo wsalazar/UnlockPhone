@@ -4,9 +4,9 @@ UnlockFormBundle_unlock:
     requirements:
         _method:  GET|POST
 
-UnlockFormBundle_paypal_token:
-    pattern:  /token
-    defaults: { _controller: UnlockFormBundle:PayPal:token }
+UnlockFormBundle_thankyou:
+    pattern:  /thank-you
+    defaults: { _controller: UnlockFormBundle:Page:thankyou }
     requirements:
         _method:  GET|POST
 
