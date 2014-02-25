@@ -23,13 +23,14 @@ class PageController extends Controller
 				if(!($tokenHandler = $service->getAccessToken())) {
 
 				}
-				die();
+
 				//$data = $form->getData();
 				//print_r($data);
 				$service->setAccessToken($tokenHandler);
 				$restStatus = $service->getUserPermission($unlock);
 				echo 'This is print r<br />';
 				print_r($restStatus);
+				die();
 				$service->RestErrorHandler($restStatus);
 				//echo $result;
 				//return $this->redirect($this->generateUrl('UnlockFormBundle_thankyou'));
