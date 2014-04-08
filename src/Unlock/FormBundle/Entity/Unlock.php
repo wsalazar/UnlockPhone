@@ -11,6 +11,12 @@ class Unlock
 
 	private $email;
 
+	private $address;
+
+	private $phone;
+
+	private $accountType;
+
 	private $creditCardNum;
 
 	private $nameOnCreditCard;
@@ -20,6 +26,30 @@ class Unlock
 	private $yearExpired;
 
 	private $cvv;
+
+	public function setPhone($phone){
+		$this->phone = $phone;
+	}
+
+	public function getPhone(){
+		return $this->phone;
+	}
+
+	public function setAddress($address){
+		$this->address = $address;
+	}
+
+	public function getAddress(){
+		return $this->address;
+	}
+
+	public function setAccountType($accountType){
+		$this->accountType = $accountType;
+	}
+
+	public function getAccountType(){
+		return $this->accountType;
+	}
 
 	public function setIMIE($imie){
 		$this->imie = $imie;

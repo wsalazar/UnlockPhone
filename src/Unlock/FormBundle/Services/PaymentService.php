@@ -8,39 +8,43 @@
 
 namespace Unlock\FormBundle\Services;
 
+
+
 /**
  * RestService uses PayPals ReSTful API
  * @author Will Salazar
  */
 
-class RestService
+class PaymentService extends PaymentServiceWrapper
 {
-	const PAYPAL_SANDBOX_URL = 'https://api.sandbox.paypal.com/v1/';
-	const TEST_ACCOUNT = 'will.a.salazar-facilitator@gmail.com';
-	const CLIENT_ID = 'AVKZiRAC2C-fS-yDLWkrzWL3N-0M0pxV8_31Ag0jVEVSckexk2wO0C5B3bJ1';
-	const SECRET = 'EIuSqhBjIdiADvhFMA1KPE6Qq6MOFBvkVH5ACI1s5OBECyUM2-Wg10EKFTg6';
+
+	
 
 	/**
 	  * @var string
 	  */
 	private $token;
-
+/*
+	public function __construct(Symfony\Component\Form\Form $form){
+		parent::__construct($form);
+	}
+*/
 	/**
 	  *This function uses OAuth 2.0 to retrieve an access token that is needed for PayPal.
 	  *@return $result whichis json object.
 	  */
 	public function getAccessToken(){
-			$init = curl_init();
-			curl_setopt($init, CURLOPT_URL, RestService::PAYPAL_SANDBOX_URL . "oauth2/token");
-			curl_setopt($init, CURLOPT_HEADER, false);
-			curl_setopt($init, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($init, CURLOPT_POST, true);
-			curl_setopt($init, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($init, CURLOPT_USERPWD, RestService::CLIENT_ID . ':'. RestService::SECRET );
-			curl_setopt($init, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-			$result = curl_exec($init);
-			curl_close($init);
-			return $result;
+			$headers = array(
+				CURLOPT_URL 			=>	PaymentServiceWrapper::PAYMENT_SANDBOX_URL . "oauth2/token",
+				CURLOPT_HEADER 			=> 	false,
+				CURLOPT_SSL_VERIFYPEER	=> 	false,
+				CURLOPT_POST 			=>	true,
+				CURLOPT_RETURNTRANSFER	=>	true,
+				CURLOPT_USERPWD			=>	PaymentServiceWrapper::CLIENT_ID . ':'. PaymentServiceWrapper::SECRET,
+				CURLOPT_POSTFIELDS		=>	"grant_type=client_credentials"
+				);
+			$this->setHeaders($headers);
+			return $this->setupCurl();
 	}
 
 	/**
@@ -51,32 +55,22 @@ class RestService
 		$accessToken = json_decode($tokenHandler);
 		$this->token = $accessToken->access_token;
 	}
-//https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize?client_id=AVKZiRAC2C-fS-yDLWkrzWL3N-0M0pxV8_31Ag0jVEVSckexk2wO0C5B3bJ1&response_type=code&scope=profile+email+address+phone+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes&redirect_uri=http://unlock.lcl/app_dev.php/unlock	
-	public function getUserPermission(){
-  		$uri = array(
-  				'client_id' => self::CLIENT_ID,
-  				'response_type'	=>	'code',
-  				'scope'	=>	'profile+email+address+phone',
-  				'redirect_uri'	=>	'http://unlock.lcl/app_dev.php/unlock'
-  			);
 
-// 		$uri = 'client_id=' . self::CLIENT_ID . '&response_type=code&scope=profile+email+address+phone+https://uri.paypal.com/services/paypalattributes&redirect_uri=http://unlock.lcl/app_dev.php/thank-you';
-  		$uri = http_build_query($uri);
-  		echo '<br /><br /><br />------'.$uri.'-------<br /><br />';
-  		$init = curl_init();
-  		curl_setopt_array($init, array(
-			CURLOPT_URL 		=> 'https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize?'.$uri,
-			//CURLOPT_HTTPGET		=> true,
+//https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize?client_id=AVKZiRAC2C-fS-yDLWkrzWL3N-0M0pxV8_31Ag0jVEVSckexk2wO0C5B3bJ1&response_type=code&scope=profile+email+address+phone+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes&redirect_uri=http://unlock.lcl/app_dev.php/unlock	
+	public function getUserPermission($unlock){
+		$headers = array(
+			CURLOPT_URL 			=> 'https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize?',
+			CURLOPT_HTTPGET		=> true,
 			CURLOPT_RETURNTRANSFER	=> true,
-			//CURLOPT_POSTFIELDS	=>	$uri,
-			CURLOPT_HEADER 		=> true,
-			CURLOPT_HTTPHEADER => array(
-					'Content-Type: application/x-www-form-urlencoded'
-				)
-			));
-  		$result = curl_exec($init);
-		curl_close($init);
-		return $result;
+			//CURLOPT_POSTFIELDS	=>	$this->getUri($unlock),
+			CURLOPT_HEADER 			=> true,
+			//CURLOPT_HTTPHEADER 		=> array(
+			//		'Content-Type: application/x-www-form-urlencoded'
+			//	)
+			);
+		$this->setHeaders($headers, $unlock);//, $unlock
+
+		return $this->setupCurl();
   	}
 
   	public function RestErrorHandler($restStatus){

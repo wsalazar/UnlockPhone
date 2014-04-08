@@ -5,7 +5,7 @@ namespace Unlock\FormBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Unlock\FormBundle\Entity\Unlock;
 use Unlock\FormBundle\Form\UnlockType;
-use Unlock\FormBundle\Services\RestService;
+use Unlock\FormBundle\Services\PaymentService;
 //use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
@@ -19,14 +19,18 @@ class PageController extends Controller
 			$form->bind($request);
 
 			if($form->isValid()){
-				$service = new RestService();
+				$service = new PaymentService();
 				if(!($tokenHandler = $service->getAccessToken())) {
 
 				}
+
+				//$data = $form->getData();
+				//print_r($data);
 				$service->setAccessToken($tokenHandler);
-				$restStatus = $service->getUserPermission();
+				$restStatus = $service->getUserPermission($unlock);
 				echo 'This is print r<br />';
 				print_r($restStatus);
+				die();
 				$service->RestErrorHandler($restStatus);
 				//echo $result;
 				//return $this->redirect($this->generateUrl('UnlockFormBundle_thankyou'));

@@ -10,7 +10,10 @@ class UnlockType extends AbstractType
 		$builder->add('imie', null, array('label' => 'IMIE: '));
 		$builder->add('firstName', null, array('label' => 'First Name: '));
 		$builder->add('lastName', null, array('label' => 'Last Name: '));
+		$builder->add('address', null, array('label' => 'Mailing Address: '));
+		$builder->add('phone', null, array('label' => 'Phone Number: '));
 		$builder->add('email','email', array('label' => 'E-Mail: '));
+		$builder->add('account_type', null, array('label' => 'Account Type: '));
 		$builder->add('creditCardNum', null, array('label' => 'Credit Card Number: '));
 		$builder->add('nameOnCreditCard', null, array('label' => 'Name on Credit Card: '));
 		$builder->add('monthExpired','choice', array(
