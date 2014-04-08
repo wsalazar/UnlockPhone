@@ -1,0 +1,3 @@
+UnlockFormBundle_unlock:
+    resource: "@UnlockFormBundle/Resources/config/routing.yml"
+    prefix:   /
