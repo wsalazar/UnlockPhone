@@ -1,5 +1,5 @@
 UnlockFormBundle_unlock:
-    pattern:  /unlock
+    pattern:  /
     defaults: { _controller: UnlockFormBundle:Page:unlock }
     requirements:
         _method:  GET|POST
